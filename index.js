@@ -1,8 +1,11 @@
 import express from "express";
 import cors from "cors";
 import pkg from "pg";
+import dotenv from "dotenv";
 
 const { Pool } = pkg;
+
+dotenv.config();
 
 const app = express();
 app.use(cors());
@@ -10,11 +13,11 @@ app.use(express.json());
 
 // Postgres connection
 const pool = new Pool({
-  user: "postgres",      // change if needed
-  host: "localhost",
-  database: "todo_db",   // must exist in Postgres
-  password: "postgres",
-  port: 5432,
+  user: process.env.DB_USER,      // change if needed
+  host: process.env.DB_HOST,
+  database: process.env.DB_DATABASE,   // must exist in Postgres
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT,
 });
 
 // Create table if not exists
