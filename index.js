@@ -35,6 +35,10 @@ await pool.query(`
 `);
 
 // Routes
+app.get("/", (req, res) => {
+  res.send("Backend is running.");
+});
+
 app.get("/notes", async (req, res) => {
   const result = await pool.query("SELECT * FROM notes ORDER BY id DESC");
   res.json(result.rows);
