@@ -12,13 +12,19 @@ app.use(cors());
 app.use(express.json());
 
 // Postgres connection
+// const pool = new Pool({
+//   user: process.env.DB_USER,      // change if needed
+//   host: process.env.DB_HOST,
+//   database: process.env.DB_DATABASE,   // must exist in Postgres
+//   password: process.env.DB_PASSWORD,
+//   port: process.env.DB_PORT,
+// });
+
 const pool = new Pool({
-  user: process.env.DB_USER,      // change if needed
-  host: process.env.DB_HOST,
-  database: process.env.DB_DATABASE,   // must exist in Postgres
-  password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT,
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false } // needed on Render
 });
+
 
 // Create table if not exists
 await pool.query(`
@@ -45,7 +51,7 @@ app.post("/notes", async (req, res) => {
   res.json(result.rows[0]);
 });
 
-const PORT = 5000;
+const PORT = process.env.PORT;
 app.listen(PORT, () =>
   console.log(`✅ Server running at http://localhost:${PORT}`)
 );
