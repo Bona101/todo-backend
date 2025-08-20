@@ -55,7 +55,7 @@ app.post("/notes", async (req, res) => {
   res.json(result.rows[0]);
 });
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;;
 app.listen(PORT, () =>
   console.log(`✅ Server running at http://localhost:${PORT}`)
 );
